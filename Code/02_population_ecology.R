@@ -24,16 +24,32 @@ plot(el)
 #other way, when have table called bei.extra and a column where el is the first. 
 el <- bei.extra[[1]] #using double square brackets because its not a simple table but an image
 
-#density map
+#density map to go from points to a density map
 dmap<-density(bei)
 plot(dmap) #density mapof spread of my population
 
 #put points on top of the map
 points(bei)
 
-points(bei,pch=15,cex=0.5) #changed look of points
+points(bei,pch=15,cex=0.2) #changed look of points
 
 plot(el)
 points(bei) #at higher elevations thereare less points
+
+plot(bei.extra) #dataset with compositionof 2 datasets,elevation and gradient
+
+#plotting together the density map and the elevation
+#one object is dmap, and the other is el. how to plot dmap beside el?
+
+#create a multiframe, so put in same graph several plots. one row and 2 columns. 
+par(mfrow=c(1,2))
+plot(dmap)
+plot(el)
+
+dev.off() #R will close any device, in case R explodes
+
+cl<-colorRampPalette(c("pink","purple","orange"))
+plot(dmap, col=cl)
+
 
 
