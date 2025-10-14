@@ -48,8 +48,14 @@ plot(el)
 
 dev.off() #R will close any device, in case R explodes
 
-cl<-colorRampPalette(c("pink","purple","orange"))
+cl<-colorRampPalette(c("pink","purple","orange"))(100) #(100) is nb of intermediate colors one after the other
 plot(dmap, col=cl)
 
+#r colors are here 
+# https://r-charts.com/colors/
 
-
+#plot the dmap with 2 different color ramps one on top of the other
+par(mfrow=c(2,1))
+plot(dmap, col=cl)
+cl2<-colorRampPalette(c("lightpink", "lightblue1", "purple"))(100)
+plot(el, col=cl2)
