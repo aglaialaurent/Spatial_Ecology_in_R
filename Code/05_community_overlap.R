@@ -15,4 +15,15 @@ kerinci$circtime <- kerinci$Time* 2 * pi
 #subset kerinci dataset choosing only the data of the tiger
 tiger <- kerinci[kerinci$Sps == "tiger",]
 
-densityPlot(tiger$circtime)
+tigertime <- tiger$circtime
+densityPlot(timetiger)
+
+#Exercise: repeat for macaque
+macaque <- kerinci[kerinci$Sps == "macaque",]
+macaquetime <- macaque$circ
+densityPlot(macaque$circtime)
+
+#How much time spent by the tiger is overlapping with that of the macaque. WHat is the adaptation of the macaque to survive to the tiger
+overlapPlot(tigertime, macaquetime)
+#we see that macaque avoids meeting tiger for survivability
+
