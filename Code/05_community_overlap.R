@@ -26,4 +26,7 @@ densityPlot(macaque$circtime)
 #How much time spent by the tiger is overlapping with that of the macaque. WHat is the adaptation of the macaque to survive to the tiger
 overlapPlot(tigertime, macaquetime)
 #we see that macaque avoids meeting tiger for survivability
-
+plot(density(species_data$circtime), 
+       main = paste("Density Plot of Circumference for", species), 
+       xlab = "Circumference")
+}
