@@ -38,3 +38,9 @@ plot(dvi1992,col=inferno(100))
 plot(dvi2006,col=inferno(100))
 #we see that in 1992, the dvi was high everywhere, and in 2006 it has decreased a lot. 
 
+#with ndvi, we standardize the data, if one image ranges from 0 to100, and another to 200, it will  normalize the data.
+ndvi1992 <- im.ndvi(m1992,1,2)
+ndvi2006 <- im.ndvi(m2006,1,2)
+par(mfrow=c(1,2))
+plot(ndvi1992,col=inferno(100))
+plot(ndvi2006,col=inferno(100))
