@@ -180,6 +180,9 @@ ggplot() +
   )
 ```
 
+**Interpretation:**  
+The combination of raw points (red), median elevation (blue), and sampling effort (grey) demonstrates that the upward trend is not an artifact of sparse early data. Median-based linear modeling confirms a robust increase in elevation over time.
+
 ---
 
 ### Linear Model: Raw Points
@@ -210,7 +213,7 @@ The median-based model shows a slope of ~26 m/year (p < 0.001) with R² = 0.72. 
 
 The spatial distribution confirms that *Parnassius apollo* is strongly associated with mountainous regions in Italy. Concentration in the Alps and Apennines reflects the species’ preference for cooler alpine environments.
 
-Temporal analyses, including median-based modeling and period comparison, indicate a significant upward shift in elevation over recent decades. The grey shading representing sampling effort highlights that early years have fewer records, confirming that median-based methods produce more reliable estimates. 
+Temporal analyses, including median-based modeling and sampling-effort visualization, indicate a significant upward shift in elevation over recent decades. The grey shading representing sampling effort highlights that early years have fewer records, confirming that median-based methods produce more reliable estimates. 
 
 While the trend may suggest climate-driven shifts, alternative explanations include sampling biases, accessibility of mountain areas, and changes in survey intensity. Nevertheless, the combination of raw points, medians, and sampling effort provides strong evidence for a consistent elevational increase.
 
