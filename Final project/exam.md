@@ -206,28 +206,6 @@ The median-based model shows a slope of ~26 m/year (p < 0.001) with R² = 0.72. 
 
 ---
 
-### Period Comparison (Before and After 2000)
-
-Records were divided into two temporal periods for comparison:
-
-- Before 2000  
-- After 2000  
-
-```r
-butterfly$period <- ifelse(butterfly$year < 2000, "Before 2000", "After 2000")
-
-ggplot(butterfly, aes(x = period, y = elevation)) +
-  geom_boxplot() +
-  theme_minimal() +
-  labs(title = "Elevation shift of Parnassius apollo",
-       y = "Elevation (m)")
-```
-
-**Interpretation:**  
-Differences in median elevation between periods may reflect upward shifts over time. Combined with median-based linear modeling, this provides consistent evidence of a temporal trend.
-
----
-
 ## Discussion
 
 The spatial distribution confirms that *Parnassius apollo* is strongly associated with mountainous regions in Italy. Concentration in the Alps and Apennines reflects the species’ preference for cooler alpine environments.
