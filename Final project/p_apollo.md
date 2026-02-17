@@ -16,7 +16,7 @@ Occurrence data were obtained from the GBIF database for the species Parnassius 
 
 The following R packages were used for data acquisition, spatial processing, and visualization:
 
-```
+```r
 library(rgbif)         # Access GBIF data
 library(dplyr)         # Data manipulation & cleaning
 library(terra)         # Raster data handling (elevation)
@@ -31,7 +31,7 @@ library(rnaturalearthdata)
 
 The analysis focuses on high-quality spatial records from the last 15 years to ensure the data reflects contemporary climatic trends.
 
-```
+```r
 # Download GBIF occurrences
 occ_gbif <- occ_search(scientificName = "Parnassius apollo", country = "IT", 
                        hasCoordinate = TRUE, limit = 120000) 
@@ -56,7 +56,7 @@ butterfly$region <- ifelse(butterfly$lat < 45 & butterfly$lon > 8.5,
 
 We processed the elevation raster, cropped it to the Italian national borders, and calculated the **Terrain Ruggedness Index (TRI)** to analyze the complexity of the habitats.
 
-```
+```r
 # Load and crop elevation raster
 elev <- rast("~/Documents/UNIVERSITY/wc2.1_30s_elev.tif")
 italy <- ne_countries(country = "Italy", scale = "medium", returnclass = "sf")
@@ -81,7 +81,7 @@ colnames(elev_df) <- c("x", "y", "elevation")
 
 The occurrence map illustrates the distribution of *P. apollo* across the major mountain chains of Italy, showing a strong affinity for high-altitude environments.
 
-```
+```r
 ggplot() +
   geom_raster(data = elev_df, aes(x = x, y = y, fill = elevation)) +
   geom_sf(data = italy, fill = NA, color = "black") +
@@ -100,7 +100,7 @@ ggplot() +
 
 We analyzed the shift in elevation over time to detect potential upward migration.
 
-```
+```r
 # Elevation over time plot
 ggplot(butterfly, aes(x = year, y = elevation, color = region)) +
   geom_point(alpha = 0.4) +
@@ -114,7 +114,7 @@ ggplot(butterfly, aes(x = year, y = elevation, color = region)) +
 
 We investigated whether the species is moving toward more rugged terrain, which often provides micro-refugia.
 
-```
+```r
 # Ruggedness over time plot
 ggplot(butterfly, aes(x = year, y = ruggedness, color = region)) +
   geom_point(alpha = 0.4) +
@@ -126,7 +126,7 @@ ggplot(butterfly, aes(x = year, y = ruggedness, color = region)) +
 
 ###Statistical Modeling
 
-```
+```r
 # Model for Elevation Shift
 model_region <- lm(elevation ~ year * region, data = butterfly)
 summary(model_region)
