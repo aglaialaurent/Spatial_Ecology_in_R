@@ -1,24 +1,23 @@
-# Spatial distribution and elevational shift of Parnassius apollo in Italy
-## Introduction
-Understanding the spatial distribution of species is a fundamental topic in ecology, as it provides information on population density, dispersal patterns, and potential environmental preferences. In the context of global climate change, tracking elevational shifts is crucial for mountain-dwelling species. These movements often serve as a "biological thermometer," revealing how species adapt to rising temperatures by seeking higher, cooler altitudes to remain within their physiological tolerance limits.
+# Spatial distribution and elevational shift of Parnassius apollo in Italy 🦋⛰️
+## 1. Aim and ecological background
+Mountain organisms are expected to respond to warming temperatures by shifting their distributions upslope, because temperature decreases with elevation and higher elevations can function as thermal refuges. Butterflies are especially informative indicators due to their sensitivity to temperature and widely available occurrence records.
+
+*Parnassius apollo* is a montane butterfly that mainly inhabits open, rocky habitats at mid- to high elevations. It is adapted to cooler conditions and depends on specific mountain environments, which makes it potentially sensitive to climate change.
 
 <p align="center">
 <img width="600" height="300" alt="image" src="https://github.com/user-attachments/assets/b74175d3-cd5b-403e-a53e-9da452b6d1e8" />
 
+**Aim:** GBIF occurrence records from 2010–2025 will be used to test whether Parnassius apollo occurrences in Italy show an upward shift in elevation over time, and whether this pattern differs between two broad mountain regions (Alps vs. Apennines).
 
-The mountain butterfly *Parnassius apollo* is a flagship species for European alpine conservation. Due to its sensitivity to temperature and its reliance on specific host plants (primarily Sedum and Sempervivum species), it serves as an excellent bioindicator for ecological changes in high-altitude ecosystems.
+### Predictions
+- If species are responding to climate warming, their occurrence elevation should increase through time.
+- Baseline elevations may differ by region due to different mountain hypsometry (Alps generally higher than Apennines).
+- Because GBIF data are opportunistic, trends must be interpreted alongside sampling effort.
 
-The objective of this project is to analyze the spatial distribution and elevational trends of Parnassius apollo in Italy between 2010 and 2025. By combining occurrence data from the Global Biodiversity Information Facility (GBIF) with high-resolution digital elevation models, we aim to quantify whether this species is exhibiting a significant upward shift in the Alps and the Apennines and how terrain complexity influences its presence.
 
-## Data and Methods
+## 2. Data and Methods
 
-### Data source
-
-Occurrence data were obtained from the GBIF database for the species Parnassius apollo within the Italian territory. Environmental data, specifically elevation, was sourced from the WorldClim (v2.1) digital elevation model at a 30-second resolution.
-
-### R packages
-
-The following R packages were used for data acquisition, spatial processing, and visualization:
+### 2.1. R packages
 
 ```r
 library(rgbif)         # Access GBIF data
@@ -31,34 +30,40 @@ library(rnaturalearth) # Country boundaries for map
 library(rnaturalearthdata) 
 ```
 
-### Data Collection and Preprocessing
+### 2.2 GBIF occurrence data 
 
-The analysis focuses on high-quality spatial records from the last 15 years to ensure the data reflects contemporary climatic trends.
+Occurrences for P. apollo in Italy with coordinates were downloaded and filtered to:
+- non-missing coordinates
+- coordinate uncertainty < 1000 m (or missing uncertainty)
+- years ≥ 2010
+- a broad Italy bounding box (for visualization focus)
 
 ```r
-# Download GBIF occurrences
-occ_gbif <- occ_search(scientificName = "Parnassius apollo", country = "IT", 
-                       hasCoordinate = TRUE, limit = 120000) 
+# Download GBIF occurrences of Parnassius apollo in Italy
+occ_gbif <- occ_search(scientificName = "Parnassius apollo", country = "IT", hasCoordinate = TRUE, limit = 120000)
+
+#Extract dataframe from gbif data
+data_gbif <- occ_gbif$data
 
 # Data cleaning and filtering
-butterfly <- occ_gbif$data %>%
-  filter(!is.na(decimalLatitude) & !is.na(decimalLongitude)) %>% 
+data_clean <- data_gbif %>%
+  filter(!is.na(decimalLatitude) & !is.na(decimalLongitude)) %>%
   filter(is.na(coordinateUncertaintyInMeters) | coordinateUncertaintyInMeters < 1000) %>%
-  filter(!is.na(year) & year >= 2010) %>%
-  select(lon = decimalLongitude, lat = decimalLatitude, year)
+  filter(!is.na(year) & year >= 2010)
 
-# Geographic subset and region assignment
-butterfly <- butterfly[butterfly$lon > 6 & butterfly$lon < 19 &
-                       butterfly$lat > 36 & butterfly$lat < 48, ]
+butterfly <- data.frame(lon = data_clean$decimalLongitude, lat = data_clean$decimalLatitude, year = data_clean$year)
 
-butterfly$region <- ifelse(butterfly$lat < 45 & butterfly$lon > 8.5, 
-                           "Apennines", "Alps") 
+# Italy bounding box for plotting focus
+butterfly <- butterfly[butterfly$lon > 6 & butterfly$lon < 19 & butterfly$lat > 36 & butterfly$lat < 48, ]
+
+# Region assignment
+butterfly$region <- ifelse(butterfly$lat < 45 & butterfly$lon > 8.5,"Apennines", "Alps") 
 ```
 
 
-### Spatial objects and Raster Processing
+### 2.3 Elevation data and extraction
 
-We processed the elevation raster, cropped it to the Italian national borders, and calculated the **Terrain Ruggedness Index (TRI)** to analyze the complexity of the habitats.
+Elevation was extracted from a WorldClim elevation raster (local file). Occurrence points were converted to a terra spatial vector and used to extract elevation at each record location.
 
 ```r
 # Load and crop elevation raster
