@@ -83,16 +83,19 @@ The occurrence map illustrates the distribution of *P. apollo* across the major 
 
 ```r
 ggplot() +
+  #Elevation raster:
   geom_raster(data = elev_df, aes(x = x, y = y, fill = elevation)) +
+  #Italy border:
   geom_sf(data = italy, fill = NA, color = "black") +
-  geom_point(data = butterfly, aes(x = lon, y = lat, color = region, shape = region),
-             size = 2, alpha = 0.5) +
+  #Occurence points:
+  geom_point(data = butterfly, aes(x = lon, y = lat, shape = region, color = region), size = 2, alpha = 0.5) +
+  scale_shape_manual(values = c("Alps" = 20, "Apennines" = 18)) + 
+  scale_color_manual(values = c("Alps" = "chocolate1", "Apennines" = "deeppink3")) +
   scale_fill_viridis(option = "mako", direction = -1) +
-  scale_color_manual(values = c("Alps" = "deeppink3", "Apennines" = "coral")) +
-  labs(title = "Parnassius apollo occurrences in Italy (2010-2025)",
-       subtitle = "Occurrences overlaid on WorldClim elevation data",
-       fill = "Elevation (m)") +
-  theme_void()
+  labs(title = "Parnassius apollo occurrences in Italy (2010-2025)",subtitle = "GBIF occurrence records overlaid on WorldClim elevation data",fill = "Elevation (m)",color = "Region",shape = "Region") +
+  coord_sf(expand = FALSE) +
+  theme_void() +
+  theme(plot.title = element_text(hjust = 0.5, face = "bold", size = 14), plot.subtitle = element_text(hjust = 0.5, size = 10))
 ```
 
 
@@ -103,11 +106,12 @@ We analyzed the shift in elevation over time to detect potential upward migratio
 ```r
 # Elevation over time plot
 ggplot(butterfly, aes(x = year, y = elevation, color = region)) +
-  geom_point(alpha = 0.4) +
-  geom_smooth(method = "lm", se = TRUE) +
+  geom_point(alpha = 0.3) +
+  geom_smooth(aes(color = region), method = "lm",se=T) +
+  labs(title = "Elevation of Parnassius apollo over time by region", x = "Year", y = "Elevation (m)",color = "Region") +
+  scale_color_manual(values = c("Alps" = "chocolate1", "Apennines" = "deeppink3")) +
   theme_minimal() +
-  labs(title = "Elevation of Parnassius apollo over time by region",
-       x = "Year", y = "Elevation (m)")
+  theme(plot.title = element_text(hjust = 0.5, face = "bold"))
 ```
 
 ### Terrain Ruggedness Analysis
