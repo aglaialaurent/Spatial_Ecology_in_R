@@ -1,4 +1,4 @@
-# Spatial distribution and elevational shift of Parnassius apollo in Italy 🦋⛰️
+# Spatial Distribution and Elevational Shift of Parnassius apollo in Italy 🦋⛰️
 ## 1. Aim and ecological background
 Mountain organisms are expected to respond to warming temperatures by shifting their distributions upslope, because temperature decreases with elevation and higher elevations can function as thermal refuges. Butterflies are especially informative indicators due to their sensitivity to temperature and widely available occurrence records.
 
@@ -118,7 +118,7 @@ ggplot() +
 **Interpretation of Figure 1.** Occurrences concentrate strongly in mountainous terrain, matching the known ecology of *P. apollo* as a montane butterfly associated with cooler climates and open alpine/subalpine habitats. The regional grouping highlights that records are primarily distributed across the Alpine arc and the Apennine chain.
 Key caution: This pattern reflects both ecology and detectability — mountain parks, trails, and accessible valleys can accumulate more observations than equally suitable but less visited areas.
 
-### 3.2 Elevational through time
+### 3.2 Elevation through time
 
 We analyzed the shift in elevation over time to detect potential upward migration.
 
@@ -181,7 +181,7 @@ Taken together, the results show a clear pattern.
 - **Figure 3** highlights **strong differences in sampling effort**, especially the sharp increase in Alpine records in recent years.
 - The linear model confirms a **significant upward trend of ~13 meters per year**, with **no difference between Alps and Apennines.**
 
-Overall, the data indicate that *Parnassius apollo* is being recorded at progressively higher elevations between 2010 and 2025. The similar slopes in both mountain systems suggest a broad-scale driver, consistent with regional climate warming.
+Overall, the data indicate that *Parnassius apollo* is being recorded at progressively higher elevations between 2010 and 2025. The similar slopes in both mountain systems suggest a broad-scale driver, consistent with regional climatic change.
 However, because sampling effort increased strongly over time — particularly in the Alps — the results should be interpreted as an upslope shift in recorded occurrences, rather than definitive proof of a demographic range shift.
 
 ## 5. Conclusion and limitations
