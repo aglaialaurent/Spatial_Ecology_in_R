@@ -172,30 +172,18 @@ The model explains only a small part of the total variation in elevation (R² �
 Overall, the results indicate that Parnassius apollo is being recorded at higher elevations over time. This pattern is consistent with a response to warming temperatures, although increasing sampling effort may also influence the trend.
 
 
-## Discussion
-### Ecological Reflections on Elevational Shift
+## 4. Synthesis
+Taken together, the results show a clear pattern.
+- Figure 1 confirms that P. apollo is strongly associated with mountainous areas in Italy.
+- Figure 2 shows that recorded elevations increase through time.
+- Figure 3 highlights strong differences in sampling effort, especially the sharp increase in Alpine records in recent years.
+- The linear model confirms a significant upward trend of ~13 meters per year, with no difference between Alps and Apennines.
 
-The results indicate a statistically significant upward trend in the elevation of *Parnassius apollo* occurrences, estimated at approximately 10 meters per year. This finding is ecologically significant as it suggests the species is actively tracking its thermal niche. As lower elevations become warmer, the metabolic costs for the larvae increase and host plants may desiccate earlier in the season, forcing populations to persist only at higher altitudes.
+Overall, the data indicate that *Parnassius apollo* is being recorded at progressively higher elevations between 2010 and 2025. The similar slopes in both mountain systems suggest a broad-scale driver, consistent with regional climate warming.
+However, because sampling effort increased strongly over time — particularly in the Alps — the results should be interpreted as an upslope shift in recorded occurrences, rather than definitive proof of a demographic range shift.
 
-Interestingly, the trend is consistent across both the Alps and the Apennines. While the Alps offer a continuous elevational gradient up to very high peaks, the Apennines are more fragmented and lower in average height. This "summit trap" effect is a major concern: as populations move upward in the Apennines, they may eventually run out of available mountain surface, leading to local extinctions.
-
-### Terrain Ruggedness and Micro-refugia
-
-The analysis of Terrain Ruggedness (TRI) shows how the species utilizes complex topographies. Rugged terrain provides a variety of microclimates (e.g., north-facing shaded slopes vs. south-facing sunny rocky outcrops) within a small geographic area. These micro-refugia can buffer the species against extreme weather events and general warming trends, allowing them to survive in areas where the macro-climate might otherwise be unsuitable.
-
-### Sampling Effort and Bias
-
-The sampling effort analysis acknowledges an increase in records over time, likely due to the democratization of biodiversity monitoring through platforms like iNaturalist. However, the robustness of the elevational trend—even when accounting for regional differences—points toward a real biological response rather than a purely observational bias.
-
-## Conclusion
-This project demonstrates the power of spatial ecology tools in R to monitor species' responses to environmental pressure. Our analysis confirms that Parnassius apollo in Italy is undergoing a significant elevational shift, likely driven by climate change.
-
-### Key Insights:
-
-- Upward Migration: A shift of ~10m/year suggests rapid adaptation or habitat loss at lower bounds.
-
-- Regional Consistency: Both the Alps and Apennines show similar trends, indicating a national ecological phenomenon.
-
-- Conservation Necessity: Protecting high-altitude rocky meadows and ensuring elevational connectivity is vital for the long-term survival of this species.
-
-These findings highlight the importance of "escalator to extinction" dynamics in mountain ecosystems, where species move higher until no suitable habitat remains. Future conservation strategies should focus on protecting these high-altitude refugia and monitoring the health of host plant communities at the species' leading edge.
+## 5. Conclusion and limitations
+This project demonstrates how spatial ecology tools in R can be used to detect potential distributional changes using open-access occurrence data. *Parnassius apollo* records in Italy increased in elevation by approximately 13 meters per year, or nearly 200 meters over 15 years, with similar trends in both the Alps and the Apennines.
+This pattern is consistent with an upslope response to warming in a cold-adapted montane butterfly and suggests a broad-scale environmental driver.
+However, because the analysis is based on presence-only GBIF data and sampling effort increased strongly over time, the results should be interpreted as an upslope shift in recorded occurrences, rather than confirmed population redistribution.
+These findings highlight the importance of monitoring high-elevation habitats, as continued upward shifts in mountain systems may lead to “escalator to extinction” dynamics if suitable habitat becomes limited at higher elevations.
