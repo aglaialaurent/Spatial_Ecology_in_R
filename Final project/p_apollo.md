@@ -2,6 +2,10 @@
 ## Introduction
 Understanding the spatial distribution of species is a fundamental topic in ecology, as it provides information on population density, dispersal patterns, and potential environmental preferences. In the context of global climate change, tracking elevational shifts is crucial for mountain-dwelling species. These movements often serve as a "biological thermometer," revealing how species adapt to rising temperatures by seeking higher, cooler altitudes to remain within their physiological tolerance limits.
 
+<p align="center">
+<img width="600" height="300" alt="image" src="https://github.com/user-attachments/assets/b74175d3-cd5b-403e-a53e-9da452b6d1e8" />
+
+
 The mountain butterfly *Parnassius apollo* is a flagship species for European alpine conservation. Due to its sensitivity to temperature and its reliance on specific host plants (primarily Sedum and Sempervivum species), it serves as an excellent bioindicator for ecological changes in high-altitude ecosystems.
 
 The objective of this project is to analyze the spatial distribution and elevational trends of Parnassius apollo in Italy between 2010 and 2025. By combining occurrence data from the Global Biodiversity Information Facility (GBIF) with high-resolution digital elevation models, we aim to quantify whether this species is exhibiting a significant upward shift in the Alps and the Apennines and how terrain complexity influences its presence.
@@ -97,7 +101,7 @@ ggplot() +
   theme_void() +
   theme(plot.title = element_text(hjust = 0.5, face = "bold", size = 14), plot.subtitle = element_text(hjust = 0.5, size = 10))
 ```
-
+<img width="2879" height="1799" alt="image" src="https://github.com/user-attachments/assets/d24a8bf8-1b6f-4223-83f2-c4cd527bb537" />
 
 ### Elevational Trends over Time
 
@@ -113,6 +117,8 @@ ggplot(butterfly, aes(x = year, y = elevation, color = region)) +
   theme_minimal() +
   theme(plot.title = element_text(hjust = 0.5, face = "bold"))
 ```
+<p align="center">
+<img width="591" height="478" alt="image" src="https://github.com/user-attachments/assets/1dcb2209-519b-4b83-8905-1ab2bd359e94" />
 
 ### Terrain Ruggedness Analysis
 
@@ -123,12 +129,15 @@ We investigated whether the species is moving toward more rugged terrain, which 
 ggplot(butterfly, aes(x = year, y = ruggedness, color = region)) +
   geom_point(alpha = 0.4) +
   geom_smooth(method = "lm", se = TRUE) +
-  labs(title="Ruggedness of occurrence points over time",
-       x = "Year", y = "TRI (Ruggedness)") +
+  labs(title="Ruggedness of occurrence points over time") +
+  scale_color_manual(values = c("Alps" = "chocolate1", "Apennines" = "deeppink3")) +
   theme_minimal()
 ```
+<p align="center">
+<img width="591" height="478" alt="image" src="https://github.com/user-attachments/assets/c8a82d3e-aa2c-48a8-b2dc-516698b7c421" />
 
-###Statistical Modeling
+
+### Statistical Modeling
 
 ```r
 # Model for Elevation Shift
