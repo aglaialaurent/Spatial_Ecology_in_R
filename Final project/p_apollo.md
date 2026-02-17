@@ -26,8 +26,7 @@ library(terra)         # Raster data handling (elevation)
 library(ggplot2)       # Data visualization
 library(viridis)       # Colorblind-friendly color scales
 library(sf)            # Spatial vector data
-library(rnaturalearth) # Country boundaries for map
-library(rnaturalearthdata) 
+library(rnaturalearth) # Country boundaries for map 
 ```
 
 ### 2.2 GBIF occurrence data 
