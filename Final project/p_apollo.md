@@ -66,58 +66,67 @@ butterfly$region <- ifelse(butterfly$lat < 45 & butterfly$lon > 8.5,"Apennines",
 Elevation was extracted from a WorldClim elevation raster (local file). Occurrence points were converted to a terra spatial vector and used to extract elevation at each record location.
 
 ```r
-# Load and crop elevation raster
-elev <- rast("~/Documents/UNIVERSITY/wc2.1_30s_elev.tif")
+elev_file <- "~/Documents/UNIVERSITY/wc2.1_30s_elev.tif"
+elev <- rast(elev_file)
+
 italy <- ne_countries(country = "Italy", scale = "medium", returnclass = "sf")
-elev_italy <- crop(elev, vect(italy))
+italy_vect <- vect(italy)
 
-# Terrain Ruggedness Index (TRI) calculation
-ruggedness <- terrain(elev_italy, v = "TRI")
+elev_italy <- crop(elev, italy_vect)
 
-# Elevation and Ruggedness Extraction
-butterfly_vect <- vect(butterfly, geom = c("lon", "lat"), crs = "EPSG:4326")
-butterfly$elevation <- extract(elev_italy, butterfly_vect)[,2]
-butterfly$ruggedness <- extract(ruggedness, butterfly_vect)[,2]
-
-# Prepare raster for ggplot
+# For map plotting
 elev_df <- as.data.frame(elev_italy, xy = TRUE)
 colnames(elev_df) <- c("x", "y", "elevation")
+
+# Spatial vector for extraction
+butterfly_vect <- vect(butterfly, geom = c("lon", "lat"), crs = "EPSG:4326")
+butterfly$elevation <- extract(elev_italy, butterfly_vect)[,2] 
 ```
 
 
-## Results
-### Spatial Distribution Map
-
-The occurrence map illustrates the distribution of *P. apollo* across the major mountain chains of Italy, showing a strong affinity for high-altitude environments.
+## 3. Results
+### 3.1 Spatial Distribution in Italy
 
 ```r
 ggplot() +
-  #Elevation raster:
   geom_raster(data = elev_df, aes(x = x, y = y, fill = elevation)) +
-  #Italy border:
   geom_sf(data = italy, fill = NA, color = "black") +
-  #Occurence points:
-  geom_point(data = butterfly, aes(x = lon, y = lat, shape = region, color = region), size = 2, alpha = 0.5) +
-  scale_shape_manual(values = c("Alps" = 20, "Apennines" = 18)) + 
+  geom_point(
+    data = butterfly,
+    aes(x = lon, y = lat, shape = region, color = region),
+    size = 2, alpha = 0.5
+  ) +
+  scale_shape_manual(values = c("Alps" = 20, "Apennines" = 18)) +
   scale_color_manual(values = c("Alps" = "chocolate1", "Apennines" = "deeppink3")) +
   scale_fill_viridis(option = "mako", direction = -1) +
-  labs(title = "Parnassius apollo occurrences in Italy (2010-2025)",subtitle = "GBIF occurrence records overlaid on WorldClim elevation data",fill = "Elevation (m)",color = "Region",shape = "Region") +
+  labs(
+    title = "*Parnassius apollo* occurrences in Italy (2010–2025)",
+    subtitle = "GBIF records overlaid on WorldClim elevation",
+    fill = "Elevation (m)",
+    color = "Region",
+    shape = "Region"
+  ) +
   coord_sf(expand = FALSE) +
   theme_void() +
-  theme(plot.title = element_text(hjust = 0.5, face = "bold", size = 14), plot.subtitle = element_text(hjust = 0.5, size = 10))
+  theme(
+    plot.title = element_text(hjust = 0.5, face = "bold"),
+    plot.subtitle = element_text(hjust = 0.5)
+  )
 ```
 <img width="2879" height="1799" alt="image" src="https://github.com/user-attachments/assets/d24a8bf8-1b6f-4223-83f2-c4cd527bb537" />
 
-### Elevational Trends over Time
+Occurrences concentrate strongly in mountainous terrain, matching the known ecology of P. apollo as a montane butterfly associated with cooler climates and open alpine/subalpine habitats. The regional grouping highlights that records are primarily distributed across the Alpine arc and the Apennine chain.
+Key caution: This pattern reflects both ecology and detectability—mountain parks, trails, and accessible valleys can accumulate more observations than equally suitable but less visited areas.
+
+### 3.2 Elevational through time
 
 We analyzed the shift in elevation over time to detect potential upward migration.
 
 ```r
-# Elevation over time plot
 ggplot(butterfly, aes(x = year, y = elevation, color = region)) +
   geom_point(alpha = 0.3) +
-  geom_smooth(aes(color = region), method = "lm",se=T) +
-  labs(title = "Elevation of Parnassius apollo over time by region", x = "Year", y = "Elevation (m)",color = "Region") +
+  geom_smooth(method = "lm", se = TRUE) +
+  labs(title = "Occurrence elevation over time by region",x = "Year",y = "Elevation (m)",color = "Region") +
   scale_color_manual(values = c("Alps" = "chocolate1", "Apennines" = "deeppink3")) +
   theme_minimal() +
   theme(plot.title = element_text(hjust = 0.5, face = "bold"))
@@ -125,34 +134,42 @@ ggplot(butterfly, aes(x = year, y = elevation, color = region)) +
 <p align="center">
 <img width="591" height="478" alt="image" src="https://github.com/user-attachments/assets/1dcb2209-519b-4b83-8905-1ab2bd359e94" />
 
-### Terrain Ruggedness Analysis
+There is a wide range of elevations in the data, which is expected in mountainous areas and when using presence-only records. The fitted lines help show whether there is a general upward or downward trend over time. If the lines slope upward, this suggests that records are increasingly found at higher elevations, which may indicate that the species is tracking cooler conditions as temperatures rise.
+However, this plot alone cannot confirm true ecological change. An apparent upward trend could also result from changes in sampling, such as more observers visiting and recording butterflies at higher elevations in recent years.
 
-We investigated whether the species is moving toward more rugged terrain, which often provides micro-refugia.
-
+### 3.3 Sampling effort over time (context for bias)
 ```r
-# Ruggedness over time plot
-ggplot(butterfly, aes(x = year, y = ruggedness, color = region)) +
-  geom_point(alpha = 0.4) +
-  geom_smooth(method = "lm", se = TRUE) +
-  labs(title="Ruggedness of occurrence points over time") +
-  scale_color_manual(values = c("Alps" = "chocolate1", "Apennines" = "deeppink3")) +
-  theme_minimal()
+obs_by_year_region <- count(butterfly, year, region)
+
+ggplot(obs_by_year_region, aes(x = year, y = n, color = region)) +
+  geom_line() +
+  geom_point() +
+  scale_color_manual(values = c("Alps" = "chocolate1",
+                                "Apennines" = "deeppink3")) +
+  labs(title = "Sampling effort over time",x = "Year",y = "Number of records",color = "Region") +
+  theme_minimal() +
+  theme(plot.title = element_text(hjust = 0.5, face = "bold"),legend.position = "top")
 ```
 <p align="center">
-<img width="591" height="478" alt="image" src="https://github.com/user-attachments/assets/c8a82d3e-aa2c-48a8-b2dc-516698b7c421" />
+<img width="800" height="700" alt="image" src="https://github.com/user-attachments/assets/84eb2d06-4cc9-41fb-aef9-5c87fbef8ef1" />
 
+The figure shows that sampling effort is highly uneven across both time and space. The Alps dominate the dataset, especially in recent years. Therefore:
+- Elevational trends likely reflect patterns primarily driven by Alpine records.
+- Any conclusions about regional differences must explicitly acknowledge sampling imbalance.
+- Results should be framed as trends in recorded occurrences, not definitive range shifts.### Statistical Modeling
 
-### Statistical Modeling
-
+### 3.4 Region specific linear model
+This model tests the year effect and the region effect on elevation, and their interaction, so whether the rate of elevational change differs between regions. 
 ```r
 # Model for Elevation Shift
 model_region <- lm(elevation ~ year * region, data = butterfly)
 summary(model_region)
 
-# Model for Ruggedness Shift
-model_rugged <- lm(ruggedness ~ year * region, data = butterfly)
-summary(model_rugged)
 ```
+The linear model shows a significant positive effect of year on elevation (β = 13.15 m per year, p < 0.001). This indicates that *Parnassius apollo* occurrences increased in elevation by approximately 13 meters per year between 2010 and 2025 — equivalent to nearly 200 meters over 15 years.
+There was no significant difference between regions (Alps vs. Apennines) in baseline elevation (p = 0.927), and the interaction between year and region was also not significant (p = 0.923). This suggests that the upward trend is similar across both mountain systems.
+The model explains only a small part of the total variation in elevation (R² ≈ 0.016). This is expected because elevation varies widely in mountainous landscapes. However, the upward trend is still statistically strong, partly because the dataset is large.
+Overall, the results indicate that Parnassius apollo is being recorded at higher elevations over time. This pattern is consistent with a response to warming temperatures, although increasing sampling effort may also influence the trend.
 
 
 ## Discussion
