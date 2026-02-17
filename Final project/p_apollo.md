@@ -1,4 +1,4 @@
-# Spatial Distribution and Elevational Shift of Parnassius apollo in Italy 🦋⛰️
+# Spatial Distribution and Elevational Shift of *Parnassius apollo* in Italy 🦋⛰️
 ## 1. Aim and ecological background
 Mountain organisms are expected to respond to warming temperatures by shifting their distributions upslope, because temperature decreases with elevation and higher elevations can function as thermal refuges. Butterflies are especially informative indicators due to their sensitivity to temperature and widely available occurrence records.
 
