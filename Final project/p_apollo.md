@@ -8,7 +8,9 @@ Butterflies are often used as **ecological indicators** due to their sensitivity
 <p align="center">
 <img width="600" height="300" alt="image" src="https://github.com/user-attachments/assets/b74175d3-cd5b-403e-a53e-9da452b6d1e8" />
 
-In this project, **GBIF occurrence records (2010–2025)** were used to investigate how the elevational distribution of *P. apollo* in Italy has changed over time and whether patterns differ between the **Alps** and the **Apennines**.## 2. Data and Methods
+In this project, **GBIF occurrence records (2010–2025)** were used to investigate how the elevational distribution of *P. apollo* in Italy has changed over time and whether patterns differ between the **Alps** and the **Apennines**.
+
+## 2. Data and Methods
 
 ### 2.1. R packages
 
