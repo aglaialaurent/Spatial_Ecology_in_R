@@ -186,16 +186,6 @@ summary(model_region)
 #### Interpretation
 Overall, the results indicate that *Parnassius apollo* is being recorded at higher elevations over time. This pattern is consistent with a response to warming temperatures. However, because the dataset is based on presence-only records and uneven sampling effort, results should be interpreted as an **upslope shift in recorded occurrences**, not confirmed population redistribution.
 
-Perfect — let’s make this final section **strong, balanced, and intellectually interesting**, without being repetitive or dramatic. We’ll clearly separate:
-
-* Main findings
-* Limitations
-* What this means
-* What could be done next
-
-Still clean. Still easy to present.
-
----
 
 ## 4. Conclusion and Limitations
 
