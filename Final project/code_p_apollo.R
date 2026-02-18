@@ -8,6 +8,7 @@ library(ggplot2)       # Plotting (maps and scatterplots)
 library(viridis)       # Nice color scale for elevation raster
 library(sf)            # Simple Features (vector data format often used for borders/maps)
 library(rnaturalearth) # Functions to access Natural Earth country polygons
+library(geodata) #for getting elev file in a reproducible manner
 
 #_-2-SPECIES DATA COLLECTION AND PREPROCESSING_____________________________
 
