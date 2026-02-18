@@ -78,8 +78,7 @@ butterfly$region <- ifelse(
 # Load WorldClim elevation raster
 # A raster is a grid of cells; each cell stores an elevation value (meters).
 # We will extract elevation values at each butterfly occurrence location.
-elev_file <- "~/Documents/UNIVERSITY/wc2.1_30s_elev.tif"
-elev <- rast(elev_file)
+elev <- geodata::worldclim_tile(var = "elev", lon = 12, lat = 42, res = 0.5, path = "data")
 
 # Get Italy polygon (vector boundary)
 # ne_countries returns an sf object (a vector polygon dataset).
