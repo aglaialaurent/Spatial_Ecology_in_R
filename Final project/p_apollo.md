@@ -65,19 +65,21 @@ butterfly$region <- ifelse(butterfly$lat < 45 & butterfly$lon > 8.5,"Apennines",
 Elevation was extracted from a WorldClim elevation raster (local file). Occurrence points were converted to a terra spatial vector and used to extract elevation at each record location.
 
 ```r
+#Load WorldClim elevation raster
 elev_file <- "~/Documents/UNIVERSITY/wc2.1_30s_elev.tif"
 elev <- rast(elev_file)
 
+#Get Italy polygon
 italy <- ne_countries(country = "Italy", scale = "medium", returnclass = "sf")
 italy_vect <- vect(italy)
 
-elev_italy <- crop(elev, italy_vect)
+elev_italy <- crop(elev, italy_vect) #Crop elev to Italy
 
 # For map plotting
 elev_df <- as.data.frame(elev_italy, xy = TRUE)
 colnames(elev_df) <- c("x", "y", "elevation")
 
-# Spatial vector for extraction
+# Spatial vector for extracting elev value for each occurrence
 butterfly_vect <- vect(butterfly, geom = c("lon", "lat"), crs = "EPSG:4326")
 butterfly$elevation <- extract(elev_italy, butterfly_vect)[,2] 
 ```
